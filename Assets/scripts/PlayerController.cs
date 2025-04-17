@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     private bool isGrounded;
 
     private bool isGiant = false;
+    public float giantDuration = 25f; // 유지 시간(초)
+    private Coroutine giantCoroutine; // 코루틴 중복 방지
+
 
     private void Awake()
     {
@@ -31,22 +34,35 @@ public class PlayerController : MonoBehaviour
         {
             case > 0:
                 transform.localScale = isGiant ? new Vector3(2f, 2f, 1f) : new Vector3(1f, 1f, 1f);
+                pAni.SetBool("isRunning", false);
                 break;
 
             case < 0:
                 transform.localScale = isGiant ? new Vector3(-2f, 2f, 1f) : new Vector3(-1f, 1f, 1f);
+                pAni.SetBool("isRunning", true);
+                break;
+
+            default:
+                pAni.SetBool("isRunning", false);
                 break;
         }
 
         isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
 
+        pAni.SetBool("isGrounded", isGrounded);
+        pAni.SetFloat("Speed", Mathf.Abs(moveInput));
+
         if (isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             rb.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-            pAni.SetTrigger("JumpAction");
+            pAni.SetBool("JumpAction", true);
+        }
+
+        if (isGrounded && rb.velocity.y <= 0.01f)
+        {
+            pAni.SetBool("JumpAction", false);
         }
     }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         switch (collision.tag)
@@ -55,7 +71,16 @@ public class PlayerController : MonoBehaviour
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
                 break;
             case "Trap":
-
+                if (isGiant)
+                {
+                    Destroy(collision.gameObject);
+                    Debug.Log("무적에 의한 함정 파괴");
+                    jumpForce += 5;
+                }
+                else
+                {
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                }
                 break;
             case "Respawn":
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -68,7 +93,12 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case "shield":
-                isGiant = true;
+                if (giantCoroutine != null)
+                {
+                    StopCoroutine(giantCoroutine); // 기존 코루틴 중단
+                }
+                jumpForce += 5;
+                giantCoroutine = StartCoroutine(GiantMode());
                 Destroy(collision.gameObject);
                 break;
             case "Jump":
@@ -81,4 +111,14 @@ public class PlayerController : MonoBehaviour
                 break;
         }
     }
+
+    private IEnumerator GiantMode()
+    {
+        isGiant = true;
+
+        yield return new WaitForSeconds(giantDuration);
+
+        isGiant = false;
+    }
+
 }

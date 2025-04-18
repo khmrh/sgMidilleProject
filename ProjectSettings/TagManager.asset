@@ -9,6 +9,7 @@ TagManager:
   - Jump
   - Trap
   - unshield
+  - Boundary
   layers:
   - Default
   - TransparentFX

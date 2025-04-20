@@ -13,11 +13,12 @@ public class followEnemyController : MonoBehaviour
     private Transform player;
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
     {
+
         Vector2 direction = player.position - transform.position;
 
         if (direction.magnitude > traceDistance)

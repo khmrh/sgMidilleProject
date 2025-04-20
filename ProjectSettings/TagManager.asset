@@ -9,7 +9,10 @@ TagManager:
   - Jump
   - Trap
   - unshield
-  - Boundary
+  - Enemy
+  - Boundrary
+  - Obstacle
+  - superSpeed
   layers:
   - Default
   - TransparentFX

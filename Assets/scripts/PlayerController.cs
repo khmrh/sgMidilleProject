@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private bool isCmini = false;
     private Coroutine sizeBuffCoroutine;
 
+    float score;
+
 
     private void Awake()
     {
@@ -39,6 +41,8 @@ public class PlayerController : MonoBehaviour
 
         originalMoveSpeed = moveSpeed;
         originalJumpForce = jumpForce;
+
+        score = 1000f;
     }
 
     private void Update()
@@ -79,6 +83,8 @@ public class PlayerController : MonoBehaviour
         {
             pAni.SetBool("JumpAction", false);
         }
+
+        score -= Time.deltaTime;
     }
 
     private void ApplyScale(bool facingRight)
@@ -136,6 +142,7 @@ public class PlayerController : MonoBehaviour
             case "Respawn":
                 if (isGiant)
                 {
+                   
                     Debug.Log("무적으로 인한 무시");
                 }
                 else
@@ -144,6 +151,9 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case "Finish":
+
+                HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)score);
+
                 LevelObject levelObject = collision.GetComponent<LevelObject>();
                 if (levelObject != null)
                 {

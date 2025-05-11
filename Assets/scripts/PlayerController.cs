@@ -4,6 +4,7 @@ using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PlayerController : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class PlayerController : MonoBehaviour
     private bool isCmini = false;
     private Coroutine sizeBuffCoroutine;
 
+    float score;
+
 
     private void Awake()
     {
@@ -39,6 +42,8 @@ public class PlayerController : MonoBehaviour
 
         originalMoveSpeed = moveSpeed;
         originalJumpForce = jumpForce;
+
+        score = 1000f;
     }
 
     private void Update()
@@ -79,6 +84,8 @@ public class PlayerController : MonoBehaviour
         {
             pAni.SetBool("JumpAction", false);
         }
+
+        score -= Time.deltaTime;
     }
 
     private void ApplyScale(bool facingRight)
@@ -144,6 +151,7 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case "Finish":
+                HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)Score);
                 LevelObject levelObject = collision.GetComponent<LevelObject>();
                 if (levelObject != null)
                 {
@@ -177,7 +185,7 @@ public class PlayerController : MonoBehaviour
                 uiManager.ShowBuff("mini", 10f);
                 break;
             case "superSpeed":
-                moveSpeed += 55;
+                moveSpeed += 60;
                 Destroy(collision.gameObject);
                 break;
         }

@@ -20,10 +20,4 @@ public class scoreBord : MonoBehaviour
         stage4.text = "STAGE 4 : " + HighScore.Load(4).ToString();
         stage5.text = "STAGE 5 : " + HighScore.Load(5).ToString();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

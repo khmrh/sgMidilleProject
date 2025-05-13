@@ -134,6 +134,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: shield
       objectReference: {fileID: 0}
+    - target: {fileID: 7202055075584375686, guid: ed90327330c485440b4d2c6a1e501453, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202055075584375686, guid: ed90327330c485440b4d2c6a1e501453, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7202055075584375686, guid: ed90327330c485440b4d2c6a1e501453, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8084222158226021513, guid: ed90327330c485440b4d2c6a1e501453, type: 3}
       propertyPath: m_LocalPosition.x
       value: 28.8

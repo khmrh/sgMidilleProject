@@ -151,7 +151,7 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case "Finish":
-                HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)Score);
+                HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)score);
                 LevelObject levelObject = collision.GetComponent<LevelObject>();
                 if (levelObject != null)
                 {

@@ -153,6 +153,7 @@ public class PlayerController : MonoBehaviour
             case "Finish":
                 HighScore.TrySet(SceneManager.GetActiveScene().buildIndex, (int)score);
                 LevelObject levelObject = collision.GetComponent<LevelObject>();
+                StageResultsever.SaveStage(SceneManager.GetActiveScene().buildIndex, (int)score);
                 if (levelObject != null)
                 {
                     levelObject.MoveToNextLevel();

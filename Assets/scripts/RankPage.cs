@@ -17,7 +17,12 @@ public class RankPage : MonoBehaviour
         allData = StageResultsever.LoadRank();
         RefreshRankList();
     }
-
+    public void Onbutton(int index)
+    {
+        stageindex = index;
+        RefreshRankList();
+        Debug.Log("index변경완료!");
+    }
     void RefreshRankList()
     {
         foreach (Transform child in contentRoot)
